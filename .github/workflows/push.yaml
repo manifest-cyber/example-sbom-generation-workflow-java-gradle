@@ -1,0 +1,38 @@
+name: CI
+
+on: [push]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node-version: [18.x]
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+      - name: Setup Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v3
+        with:
+          node-version: ${{ matrix.node-version }}
+          cache: true
+      - name: Install cdxgen
+        run: sudo npm install -g @cyclonedx/cdxgen
+      - name: Run cdxgen
+        run: cdxgen .  -o ./bom.json --deep --type java --resolve-class --recurce
+      - name: View SBOM
+        run: cat ./bom.json
+      # Transmit a copy of our generated SBOM to Manifest
+      - name: Transmit generated SBOM to Manifest
+        uses: manifest-cyber/manifest-github-action@main
+        id: transmit
+        with:
+          apiKey: ${{ secrets.MANIFEST_API_KEY }}
+          bomFilePath: "./bom.json"
+          sbom-version: ""
+          sbom-name: testing-go-mod-name
+          sbom-output: cyclonedx-json
+ 
