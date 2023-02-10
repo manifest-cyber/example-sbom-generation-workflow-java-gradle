@@ -21,7 +21,7 @@ jobs:
       - name: Install cdxgen
         run: sudo npm install -g @cyclonedx/cdxgen
       - name: Run cdxgen
-        run: cdxgen .  -o ./bom.json --deep --type java --resolve-class --recurce
+        run: cdxgen .  -o ./bom.json --deep --type java --resolve-class --recurse
       - name: View SBOM
         run: cat ./bom.json
       # Transmit a copy of our generated SBOM to Manifest
