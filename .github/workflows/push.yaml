@@ -18,7 +18,6 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: ${{ matrix.node-version }}
-          cache: true
       - name: Install cdxgen
         run: sudo npm install -g @cyclonedx/cdxgen
       - name: Run cdxgen
