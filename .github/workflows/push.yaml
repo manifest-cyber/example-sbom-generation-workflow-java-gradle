@@ -24,14 +24,14 @@ jobs:
         run: cdxgen .  -o ./bom.json --deep --type java --resolve-class --recurse
       - name: View SBOM
         run: cat ./bom.json
-      # Transmit a copy of our generated SBOM to Manifest
+      # Generate and publish a copy of our generated SBOM to Manifest
       - name: Transmit generated SBOM to Manifest
         uses: manifest-cyber/manifest-github-action@main
         id: transmit
         with:
           apiKey: ${{ secrets.MANIFEST_API_KEY }}
           bomFilePath: "./bom.json"
-          sbom-version: ""
-          sbom-name: testing-go-mod-name
-          sbom-output: cyclonedx-json
+          sbomVersion: ""
+          sbomName: testing-go-mod-name
+          sbomOutput: cyclonedx-json
  
