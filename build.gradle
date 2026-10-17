@@ -1,5 +1,5 @@
 plugins {
-  id 'org.cyclonedx.bom' version '3.4.1'
+  id 'org.cyclonedx.bom' version '3.5.1'
 }
 
 apply plugin: 'java'
